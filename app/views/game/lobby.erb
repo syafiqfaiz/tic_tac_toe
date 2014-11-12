@@ -1,0 +1,16 @@
+<div class='container'>
+  <div align='center'>
+    <%if @games.count > 0 %>
+      <%@games.each do |game| %>
+        <%owner = User.find(game.player_1)%>
+        Game id: <%=game.id %> Player 1: <%=owner.username%>
+        <a href='/game/<%=game.id%>/<%=session[:id]%>'><button>Join game</button><br></a>
+      <%end%>
+    <%else%>
+      <p>No game is open.</p>
+      <button>test</button>
+    <%end%>
+  </div>
+  or <a href='/game/create'><button type='submit'>Create game</button></a>
+
+</div>
