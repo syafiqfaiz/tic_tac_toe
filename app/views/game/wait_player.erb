@@ -1,3 +1,27 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#ready").hide();
+    var player_2 ;
+    var current_game = "<%=@current_game.id%>"
+    // while (!player_2){
+      // $.get( "/game/wait_player", function( data ) {
+      //   alert( "Data Loaded: " + data );
+      // });
+    // };
+    $("#loader").hide();
+    $("#ready").show();
+  });
+
+
+
+</script>
+
 <div class='container'>
-  <img id="loader" src="loader.gif"/>Waiting for player 2.
+  <div class='loader'>
+    <img id="loader" src="ajax-loader.gif"/>Waiting for other player.
+  </div>
+  <div class='ready'>
+    Player is ready.
+    <a href='/game/<%=@current_game.id%>/<%=@current_game.player_2%>'><button>Go</button>
+  </div>
 </div>

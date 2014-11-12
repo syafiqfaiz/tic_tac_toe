@@ -2,12 +2,15 @@ enable :sessions
 
 
 get '/game/lobby' do
-  @games = Game.where(player_2: nil)
+  @games = Game.where(player_2: nil).last(5)
+  puts "finish loading game lobby"
   erb :'/game/lobby'
 end
 
 get '/game/create' do
-  current_game = Game.create(player_1: session[:id])
+  puts "creating new game"
+  @current_game = Game.create(player_1: session[:id])
+  puts "finish creating new game"
   erb :'/game/wait_player'
 end
 
