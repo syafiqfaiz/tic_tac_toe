@@ -37,7 +37,7 @@ post '/user/log_in' do
   end
 end
 
-get '/user/sign_out' do
+get '/user/log_out' do
   session[:id] = nil
   redirect '/'
 end

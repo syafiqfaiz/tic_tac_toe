@@ -1,8 +1,10 @@
 <div class="container">
   <h1>Welcome to Tic Tac Toe!</h1>
   <%if login %>
-    <a href="/game/lobby"><button type='submit' value='submit'>Log in</button></a>
+  <a href="/game/lobby"><button type='submit' value='submit'>Play</button></a><br><br>
+  <a href="/user/log_out"><button type='submit' value='submit'>Log out</button></a>
   <%else%>
+    <a href="/user/log_in"><button type='submit' value='submit'>Log in</button></a> or
     <a href='/user/sign_in'><button type='submit' value='submit'>Sign in</button></a>
   <%end%>
 </div>
