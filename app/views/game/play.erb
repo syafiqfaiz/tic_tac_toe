@@ -10,10 +10,10 @@ For this and over 400+ free scripts, visit http://javascriptkit.com
 //if IE4/NS6, apply style
 if (document.all||document.getElementById){
 document.write('<style>.tictac{')
-document.write('width:50px;height:50px;')
+document.write('width:80px;height:80px;')
 document.write('}</style>')
 }
-
+//declare all cell
 var sqr1
 var sqr2
 var sqr3
@@ -34,8 +34,13 @@ var sqr8T = 0
 var sqr9T = 0
 var moveCount = 0
 var turn = 0
-var mode = 1
+var mode = '<%=@game_mode%>' //1 for single player, 2 for multiplayer
 
+var game_id = '<%=@current_game_id%>'
+var game_winner
+
+
+//what is this for? dont get it yet
 function vari()
 {
 sqr1 = document.tic.sqr1.value
@@ -48,229 +53,235 @@ sqr7 = document.tic.sqr7.value
 sqr8 = document.tic.sqr8.value
 sqr9 = document.tic.sqr9.value
 }
-function check()
+
+//check if player win
+//if player is now winning yet, do
+//win check, check if player lose
+//if not check if game draw
+
+
+
+//------------------checking the game status---------------
+
+
+function check()//check if player win against Ai
 {
   if(sqr1 == " X " && sqr2 == " X " && sqr3 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr4 == " X " && sqr5 == " X " && sqr6 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr7 == " X " && sqr8 == " X " && sqr9 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr1 == " X " && sqr4 == " X " && sqr7 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr2 == " X " && sqr5 == " X " && sqr8 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr3 == " X " && sqr6 == " X " && sqr9 == " X ")
   {
-    alert("You Win!")
-    reset()
-  }
-  else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
-  {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else if(sqr3 == " X " && sqr5 == " X " && sqr7 == " X ")
   {
-    alert("You Win!")
-    reset()
+    win()
+    update_game()
   }
   else
   {
-    winCheck()
-    check2()
-    drawCheck()
+    winCheck() // Ai turns to win the game
+    check2()//check if player lose
+    drawCheck()//check if game draw
   }
 }
 
-function check2()
+function check2()//check if player lose against Ai
 {
   vari()
   drawCheck()
   if(sqr1 == " O " && sqr2 == " O " && sqr3 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr4 == " O " && sqr5 == " O " && sqr6 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr7 == " O " && sqr8 == " O " && sqr9 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr1 == " O " && sqr4 == " O " && sqr7 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr2 == " O " && sqr5 == " O " && sqr8 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr3 == " O " && sqr6 == " O " && sqr9 == " O ")
   {
-    alert("You Lose!")
-    reset()
-  }
-  else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
-  {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
   else if(sqr3 == " O " && sqr5 == " O " && sqr7 == " O ")
   {
-    alert("You Lose!")
-    reset()
+    lose()
+    update_game()
   }
 }
 
-function player1Check()
+
+function player1Check()//for multiplayer version, check if player 1 win
 {
   if(sqr1 == " X " && sqr2 == " X " && sqr3 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr4 == " X " && sqr5 == " X " && sqr6 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr7 == " X " && sqr8 == " X " && sqr9 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr1 == " X " && sqr4 == " X " && sqr7 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr2 == " X " && sqr5 == " X " && sqr8 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr3 == " X " && sqr6 == " X " && sqr9 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else if(sqr3 == " X " && sqr5 == " X " && sqr7 == " X ")
   {
-    alert("Player 1 wins!")
-    reset()
+    player_1_win()
+    update_game()
   }
   else
   {
-    player2Check()
+    player2Check()//for multiplayer game, check if player 2 win
     drawCheck()
   }
 }
 
-function player2Check()
+function player2Check()//for multiplayer, check if player 2 win
 {
   vari()
   drawCheck()
   if(sqr1 == " O " && sqr2 == " O " && sqr3 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr4 == " O " && sqr5 == " O " && sqr6 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr7 == " O " && sqr8 == " O " && sqr9 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr1 == " O " && sqr4 == " O " && sqr7 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr2 == " O " && sqr5 == " O " && sqr8 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr3 == " O " && sqr6 == " O " && sqr9 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
   else if(sqr3 == " O " && sqr5 == " O " && sqr7 == " O ")
   {
-    alert("Player 2 wins!")
-    reset()
+    player_2_win()
+    update_game()
   }
 }
 
-function drawCheck()
+function drawCheck()//count if all cell is ticked/draw
 {
   vari()
   moveCount = sqr1T + sqr2T + sqr3T + sqr4T + sqr5T + sqr6T + sqr7T + sqr8T + sqr9T
   if(moveCount == 9)
   {
-    reset()
     alert("Draw")
+    game_winner = 4
+    update_game()
+
   }
 }
 
-function winCheck()
+//--------------------computer Ai-----------------------------
+
+function winCheck()//function for computer to take his winning turn
 {
   check2()
   if(sqr1 == " O " && sqr2 == " O " && sqr3T == 0 && turn == 1)
@@ -429,7 +440,7 @@ function winCheck()
   }
   check2()
 }
-function computer()
+function computer()//function for computer to take his defensive turn
 {
   check2()
   if(sqr1 == " X " && sqr2 == " X " && sqr3T == 0 && turn == 1)
@@ -589,7 +600,7 @@ function computer()
   check2()
 }
 
-function AI()
+function AI()//computer AI for when not doing defense nor attacking
 {
   vari()
   if(document.tic.sqr5.value == "     " && turn == 1)
@@ -649,36 +660,77 @@ function AI()
   check2()
 }
 
-function reset()
+
+
+//-----------------multiplayer function-------------------
+
+function check_update()
 {
-  document.tic.sqr1.value = "     "
-  document.tic.sqr2.value = "     "
-  document.tic.sqr3.value = "     "
-  document.tic.sqr4.value = "     "
-  document.tic.sqr5.value = "     "
-  document.tic.sqr6.value = "     "
-  document.tic.sqr7.value = "     "
-  document.tic.sqr8.value = "     "
-  document.tic.sqr9.value = "     "
-  sqr1T = 0
-  sqr2T = 0
-  sqr3T = 0
-  sqr4T = 0
-  sqr5T = 0
-  sqr6T = 0
-  sqr7T = 0
-  sqr8T = 0
-  sqr9T = 0
-  vari()
-  turn = 0
-  moveCount = 0
+  setInterval(board_update(),1000)
 }
 
-function resetter()
+function board_update()
 {
-  reset()
+   response = $.ajax({
+    type:"POST",
+    url: "/game/request_board_update",
+    data: {current_game_id: game_id}
+  })
+}
+
+function update_board()
+{
+  $.ajax({
+    type:"POST",
+    url: "/game/update_board",
+    data: {current_game_id: game_id, sqr_1: sqr1, sqr_2: sqr2, sqr_3: sqr3, sqr_4: sqr4, sqr_5: sqr5, sqr_6: sqr6, sqr_7: sqr7, sqr_8: sqr8, sqr_9: sqr9}
+  })
+}
+
+
+
+
+
+//-----------------update winner and loser-----------------
+function win()
+{
+  game_winner = 1
+  alert("you win")
+}
+
+function lose()
+{
+  game_winner = 3
+  alert("you lose")
+}
+
+function player_1_win(){
+  game_winner = 1
+  alert("player 1 win")
+}
+
+function player_2_win(){
+  game_winner = 2
+  alert("player 2 win")
+}
+
+function update_game()
+{
+  request = $.ajax({
+    type:"POST",
+    url: "/game/update_game",
+    data: {current_game_id: game_id, winner: game_winner }
+  })
+  request.done(function(msg){
+    alert("Data saved: " + msg)
+    window.location.href = "/game/conclude_game";
+  })
 }
 </SCRIPT>
+
+<!-- ______________________the board______________________ -->
+
+
 <div class='container' align='center'>
   <FORM NAME="tic" method="post">
   <INPUT TYPE="button" NAME="sqr1" class="tictac" value="     " onClick="if(document.tic.sqr1.value == '     ' && turn == 0 && mode == 1) {document.tic.sqr1.value = ' X '; sqr1T = 1; turn = 1; vari(); check();} else if(document.tic.sqr1.value == '     ' && turn == 1 && mode == 2) {document.tic.sqr1.value = ' X '; sqr1T = 1; turn = 0; vari(); player1Check()} else if(document.tic.sqr1.value == '     ' && turn == 0 && mode == 2) {document.tic.sqr1.value = ' O '; sqr1T = 1; turn = 1; vari(); player1Check()} drawCheck()">
