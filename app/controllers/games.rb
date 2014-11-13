@@ -14,9 +14,28 @@ get '/game/create' do
   erb :'/game/wait_player'
 end
 
+get '/game/wait_player' do
+  current_game = Game.find(params[:game_id])
+  current_game.player_2 = 1
+  if current_game.player_2 != nil
+    return "true"
+  else
+    return "false"
+  end
+end
+
 get '/game/:game_id/:player_2_id' do
+  puts "player 2 join the game"
   current_game = Game.find(params[:game_id])
   current_game.player_2 = params[:player_2_id]
   current_game.save
-  erb :'/game/play'
+  redirect '/game/play/params[:game_id]'
+end
+
+
+get '/game/play/:current_game.id' do
+  current_game = Game.find(params[:current_game_id])
+  if session[:id] == current_game.player_1
+
+
 end

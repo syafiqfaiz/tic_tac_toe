@@ -15,12 +15,10 @@ post '/user/sign_in' do
   user.created_at = Time.now
   user.updated_at = Time.now
   if user.save
-    "sign in successful"
-    sleep(5)
+    puts "sign in successful"
     redirect "/user/log_in"
   else
-    "sign in failed"
-    sleep(5)
+    puts "sign in failed"
     redirect back
   end
 end
@@ -31,8 +29,7 @@ post '/user/log_in' do
     session[:id] = user.id
     redirect '/'
   else
-    "log in failed"
-    sleep(5)
+     puts "log in failed"
     redirect back
   end
 end

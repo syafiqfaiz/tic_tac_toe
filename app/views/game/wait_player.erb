@@ -1,27 +1,32 @@
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#ready").hide();
-    var player_2 ;
-    var current_game = "<%=@current_game.id%>"
-    // while (!player_2){
-      // $.get( "/game/wait_player", function( data ) {
-      //   alert( "Data Loaded: " + data );
-      // });
-    // };
-    $("#loader").hide();
-    $("#ready").show();
+    $("div#ready").hide();
+    var player_2 = '0' ;
+    var current_game = "<%=@current_game.id%>";
+    $("#ask").click(function(){
+      $.get( "/game/wait_player", {game_id:current_game}, function( data ) {
+        if (data == "true"){
+          alert("player is ready ");
+          $("div#ready").show();
+          $("div.loader").hide();
+          }
+        else{
+          alert("player is not ready " );
+          }
+      });
+    });
+
+
   });
-
-
-
 </script>
 
 <div class='container'>
-  <div class='loader'>
-    <img id="loader" src="ajax-loader.gif"/>Waiting for other player.
+  <div class="loader">
+    Waiting for other player.
+    <button id='ask'>Ask</button>
   </div>
-  <div class='ready'>
+  <div id="ready">
     Player is ready.
-    <a href='/game/<%=@current_game.id%>/<%=@current_game.player_2%>'><button>Go</button>
+    <a href='/game/play/<%=@current_game.id%>'><button id='ready'>Go</button>
   </div>
 </div>
